@@ -1,0 +1,77 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual environments
+venv/
+ENV/
+env/
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Jupyter
+.ipynb_checkpoints
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Data files (large files)
+data/raw/**/*.wav
+data/raw/**/*.flac
+data/raw/**/*.mp3
+data/processed/**/*.wav
+data/processed/**/*.npz
+data/interim/**/*.npy
+
+# Model files (large files)
+models/**/*.pt
+models/**/*.pth
+models/**/*.ckpt
+models/**/*.h5
+models/**/*.pb
+
+# Results
+artifacts/**/*.json
+artifacts/**/*.jsonl
+artifacts/**/*.csv
+!artifacts/modelcards/*.md
+results/**/*.wav
+results/**/*.npy
+reports/**/*.png
+reports/**/*.jpg
+
+# Logs
+*.log
+logs/
+log/
+
+# Checkpoints
+checkpoints/
+
+# Temporary files
+temp_output/
+*.tmp

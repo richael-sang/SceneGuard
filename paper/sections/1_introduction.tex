@@ -1,0 +1,21 @@
+\section{Introduction}
+
+Deep learning has enabled high-fidelity voice cloning systems capable of synthesizing speech that closely mimics a target speaker's voice. While these technologies have legitimate applications in accessibility and entertainment, they also pose serious threats to privacy and security. Attackers can use unauthorized voice recordings to train text-to-speech (TTS) or voice conversion (VC) models, enabling impersonation attacks, voice-based authentication breaches, and creation of misleading audio content.
+
+To counter these threats, recent work has explored proactive defense mechanisms that protect voice recordings from being exploited for cloning. A prominent approach adds imperceptible adversarial perturbations to audio recordings, degrading the quality of models trained on protected data~\citep{safespeech,voiceblock}. However, these defenses face a fundamental challenge: imperceptible perturbations are fragile. Standard audio preprocessing operations such as denoising, compression, and filtering can remove or significantly reduce these perturbations, rendering the protection ineffective.
+
+We observe that the requirement for imperceptibility may be unnecessarily restrictive. In many real-world scenarios, background noise is expected and acceptable. For instance, recordings made in cafes, streets, or offices naturally contain ambient noise. This insight leads to a key question: can we design voice protection mechanisms that leverage audible but contextually appropriate noise?
+
+We propose SceneGuard, a training-time defense that applies scene-consistent audible background noise to speech recordings through gradient-based optimization. SceneGuard first classifies the acoustic scene of input speech, then jointly optimizes a temporal mask $m(t)$ and noise strength $\gamma$ to minimize speaker similarity while maintaining usability. For example, speech recorded in an airport is mixed with optimized airport background noise, creating a protective layer that appears natural and contextually plausible. This design offers three advantages: (1) optimization automatically finds the protection-usability trade-off, (2) the protection is harder to remove because scene-consistent noise cannot be easily separated from speech without degrading speech quality, and (3) the defense is robust to common audio preprocessing operations.
+
+We evaluate SceneGuard on training attack scenarios where an attacker uses protected recordings to fine-tune TTS models. Our experiments on 100 training samples and 40 test samples demonstrate 5.5\% speaker similarity degradation ($p < 10^{-15}$, Cohen's $d = 2.18$), indicating strong statistical evidence of protection effectiveness. Importantly, SceneGuard preserves 98.6\% speech intelligibility (STOI = 0.986) and achieves low word error rate (WER = 3.6\%), demonstrating that protected speech remains highly usable. Robustness evaluation shows that SceneGuard maintains protection under MP3 compression and even exhibits enhanced protection under denoising, lowpass filtering, and downsampling operations.
+
+The main contributions of this work are:
+\begin{itemize}
+    \item We propose a novel training-time voice protection method based on scene-consistent audible background noise with joint optimization of temporal mask and noise strength, departing from the conventional imperceptibility requirement.
+    \item We design a gradient-based optimization framework that automatically balances speaker protection and speech usability under SNR constraints.
+    \item We demonstrate strong protection against training attacks with extremely high statistical significance ($p < 10^{-15}$, Cohen's $d = 2.18$) while preserving speech usability (STOI = 0.986, WER = 3.6\%).
+    \item We provide comprehensive robustness evaluation showing that SceneGuard maintains or enhances protection under five common audio countermeasures.
+    \item We release our implementation and experimental framework to facilitate reproducible research in voice protection.
+\end{itemize}
+

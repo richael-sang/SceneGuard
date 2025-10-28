@@ -1,0 +1,38 @@
+\section{Discussion}
+
+\subsection{Why Scene-Consistency Matters}
+
+The key insight behind SceneGuard is that scene-consistent noise is fundamentally different from random or imperceptible perturbations. When background noise matches the acoustic context of speech, it creates a perceptually natural mixture that is difficult to separate. Speech enhancement algorithms are designed to preserve speech while removing noise, but this separation becomes ambiguous when noise and speech share similar spectro-temporal characteristics typical of a scene.
+
+Psychoacoustic masking further explains SceneGuard's effectiveness. Auditory masking occurs when one sound makes another sound less audible. Scene-consistent noise can mask subtle speaker-specific characteristics while preserving overall speech intelligibility. This selective masking degrades speaker embeddings without proportionally affecting transcription accuracy, as evidenced by our results (5.5\% similarity degradation vs. 2.77\% WER).
+
+\subsection{Robustness Mechanism}
+
+The robustness of SceneGuard to audio preprocessing is a critical advantage over imperceptible perturbations. Our results show that certain countermeasures paradoxically enhance protection rather than removing it. This phenomenon has several explanations:
+
+\textbf{Spectral Subtraction}: This denoising technique assumes stationary noise and removes spectral components with consistent energy. However, scene-consistent noise contains non-stationary elements (e.g., footsteps, vehicle sounds) that are not fully removed. Meanwhile, spectral subtraction introduces musical noise artifacts that further degrade speaker embeddings.
+
+\textbf{Lowpass Filtering and Downsampling}: Speaker identity relies significantly on high-frequency spectral details and prosodic variations. Lowpass filtering and downsampling preferentially remove these high-frequency components while preserving lower-frequency protective noise. This asymmetric degradation enhances protection.
+
+\textbf{MP3 Compression}: Lossy compression preserves perceptually important components. Because SceneGuard uses audible noise, it is treated as salient content rather than irrelevant information to be discarded. This contrasts with imperceptible perturbations that fall below perceptual thresholds and are aggressively quantized.
+
+\subsection{Limitations}
+
+We acknowledge several limitations of this work:
+
+\textbf{Single-Speaker Evaluation}: Our primary evaluation focuses on a single speaker (LibriTTS speaker 5339). While this enables controlled experimentation, it limits conclusions about generalization across speakers. Future work should expand evaluation to diverse speakers with varying vocal characteristics.
+
+\textbf{Audible Protection}: SceneGuard deliberately uses audible noise, which may be undesirable in scenarios requiring pristine audio quality. Applications such as studio recordings or professional voice work may prefer imperceptible protections despite their fragility. SceneGuard is best suited for everyday voice recordings where some background noise is acceptable.
+
+\textbf{Quality Metrics}: Our PESQ scores (2.03) fall below the ideal threshold of 3.0, indicating room for improvement in perceptual quality. This reflects the fundamental trade-off between protection and quality. Future work could explore perceptually optimized noise mixing strategies that maximize protection while minimizing quality degradation.
+
+\textbf{Adaptive Attacks}: We evaluate SceneGuard against standard audio preprocessing countermeasures, but a sophisticated attacker might develop adaptive attacks specifically designed to remove scene-consistent noise. Potential adaptive strategies include scene-aware source separation or adversarial training. However, such attacks would require significant additional effort and may introduce other artifacts.
+
+\subsection{Broader Impact}
+
+SceneGuard has positive implications for privacy protection in voice-based applications. As voice assistants and communication platforms become ubiquitous, users need practical mechanisms to protect their voice recordings from unauthorized cloning. SceneGuard provides a usable defense that does not require specialized hardware or complex optimization.
+
+However, voice protection technologies also raise ethical considerations. While our work focuses on legitimate privacy protection, similar techniques could potentially be misused to evade accountability or obscure audio evidence. We emphasize that SceneGuard is designed for proactive defense by individuals protecting their own voice recordings, not for altering third-party content.
+
+We also note that SceneGuard does not completely prevent voice cloning; it degrades cloning quality to reduce attack success rates. Defenders should employ multiple layers of protection, including careful control over recording distribution and monitoring for unauthorized synthetic content.
+
